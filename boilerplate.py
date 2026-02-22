@@ -1,8 +1,8 @@
 """
-Boilerplate Module for LunarOrbit
+Boilerplate-modul for LunarOrbit
 
-Contains utility functions, constants, and helper classes.
-This module provides reusable functionality for the application.
+Indeholder hjælpefunktioner, konstanter og hjælperklasser.
+Dette modul giver genbrugelig funktionalitet til applikationen.
 """
 
 from datetime import datetime, timedelta
@@ -10,52 +10,52 @@ from typing import Dict, List, Tuple
 
 
 class DateUtils:
-    """Utility functions for date and time handling."""
+    """Hjælpefunktioner til dato- og tidshåndtering."""
     
     @staticmethod
     def get_current_date() -> str:
         """
-        Get today's date in YYYY-MM-DD format.
+        Får dagens dato i YYYY-MM-DD-format.
         
         Returns:
-            str: Current date formatted as YYYY-MM-DD
+            str: Nuværende dato formateret som YYYY-MM-DD
         """
         return datetime.now().strftime("%Y-%m-%d")
     
     @staticmethod
     def get_current_time() -> str:
         """
-        Get current time in HH:MM:SS format.
+        Får aktuel tid i HH:MM:SS-format.
         
         Returns:
-            str: Current time formatted as HH:MM:SS
+            str: Aktuel tid formateret som HH:MM:SS
         """
         return datetime.now().strftime("%H:%M:%S")
     
     @staticmethod
     def format_date(date_obj: datetime) -> str:
         """
-        Format a datetime object to YYYY-MM-DD.
+        Formatterer et datetime-objekt til YYYY-MM-DD.
         
         Args:
-            date_obj (datetime): Date object to format
+            date_obj (datetime): Datoobjekt der skal formateres
         
         Returns:
-            str: Formatted date string
+            str: Formateret datostreng
         """
         return date_obj.strftime("%Y-%m-%d")
     
     @staticmethod
     def get_date_range(start_date: datetime, days: int = 30) -> List[str]:
         """
-        Generate a list of dates starting from start_date for N days.
+        Genererer en liste af datoer startende fra start_date i N dage.
         
         Args:
-            start_date (datetime): Starting date
-            days (int): Number of days to generate
+            start_date (datetime): Startdato
+            days (int): Antal dage at generere
         
         Returns:
-            list: List of date strings in YYYY-MM-DD format
+            list: Liste af datostrenge i YYYY-MM-DD-format
         """
         date_list = []
         for i in range(days):
@@ -65,16 +65,16 @@ class DateUtils:
 
 
 class MoonConstants:
-    """Constants related to moon observations."""
+    """Konstanter relateret til månobservationer."""
     
-    # Copenhagen coordinates (default observation point)
+    # Københavns koordinater (standard observationspunkt)
     LATITUDE = 55.6761
     LONGITUDE = 12.5683
     
-    # Moon cycle constants
-    SYNODIC_MONTH = 29.53  # Days in a lunar cycle
+    # Månecykluskonstanter
+    SYNODIC_MONTH = 29.53  # Dage i en månecyklus
     
-    # Phase names in Danish
+    # Fasenavne på dansk
     PHASE_NAMES = {
         0: "Nymåne",
         1: "Voksende halvmåne",
@@ -88,18 +88,18 @@ class MoonConstants:
 
 
 class Validators:
-    """Input validation utilities."""
+    """Hjælpeprogrammer til inputvalidering."""
     
     @staticmethod
     def is_valid_date(date_string: str) -> bool:
         """
-        Validate if string is a valid date in YYYY-MM-DD format.
+        Validerer om streng er en gyldig dato i YYYY-MM-DD-format.
         
         Args:
-            date_string (str): Date string to validate
+            date_string (str): Datostreng der skal valideres
         
         Returns:
-            bool: True if valid date format, False otherwise
+            bool: Sandt hvis gyldig datoformat, falsk ellers
         """
         try:
             datetime.strptime(date_string, "%Y-%m-%d")
@@ -110,91 +110,91 @@ class Validators:
     @staticmethod
     def is_valid_phase(phase_value: float) -> bool:
         """
-        Validate if phase value is in valid range (0-1).
+        Validerer om faseværdi er i gyldig interval (0-1).
         
         Args:
-            phase_value (float): Phase value to validate
+            phase_value (float): Faseværdi der skal valideres
         
         Returns:
-            bool: True if 0 <= phase_value <= 1
+            bool: Sandt hvis 0 <= phase_value <= 1
         """
         return 0 <= phase_value <= 1
     
     @staticmethod
     def is_valid_illumination(illumination: float) -> bool:
         """
-        Validate if illumination value is in valid range (0-100).
+        Validerer om belysningsværdi er i gyldig interval (0-100).
         
         Args:
-            illumination (float): Illumination percentage to validate
+            illumination (float): Belysningsprocent der skal valideres
         
         Returns:
-            bool: True if 0 <= illumination <= 100
+            bool: Sandt hvis 0 <= illumination <= 100
         """
         return 0 <= illumination <= 100
 
 
 class Formatters:
-    """Output formatting utilities."""
+    """Hjælpeprogrammer til outputformatering."""
     
     @staticmethod
     def format_illumination(illumination: float) -> str:
         """
-        Format illumination value as percentage string.
+        Formatterer belysningsværdi som procentstreng.
         
         Args:
-            illumination (float): Illumination percentage (0-100)
+            illumination (float): Belysningsprocent (0-100)
         
         Returns:
-            str: Formatted string (e.g., "75%")
+            str: Formateret streng (f.eks. "75%")
         """
         return f"{int(illumination)}%"
     
     @staticmethod
     def format_coordinates(latitude: float, longitude: float) -> str:
         """
-        Format coordinates for display.
+        Formatterer koordinater til visning.
         
         Args:
-            latitude (float): Latitude value
-            longitude (float): Longitude value
+            latitude (float): Breddegrad værdi
+            longitude (float): Længdegrad værdi
         
         Returns:
-            str: Formatted coordinates string
+            str: Formateret koordinatstreng
         """
         return f"{latitude:.4f}°N, {longitude:.4f}°E"
 
 class MoonEngine:
     """
-    Moon phase calculation and transformation engine.
+    Månefaseberegning og transformationsmotor.
     
-    Converts raw moon phase values from API into human-readable names
-    and provides phase-related calculations.
+    Konverterer råmånefaseværdier fra API til menneskelæsbare navne
+    og giver faserelatererede beregninger.
     """
     
-    # Synodic month (lunar cycle) in days
+    # Synodisk måned (månecyklus) i dage
     SYNODIC_MONTH = 29.53
     
     @staticmethod
     def get_phase_name(phase_value: float) -> str:
         """
-        Convert API phase value (0-1) to human-readable phase name.
+        Konverterer API-faseværdi (0-1) til menneskelæsbar fasenavn.
         
-        The moon cycle is divided into 8 phases:
-        - 0.0-0.125: Nymåne (New Moon)
-        - 0.125-0.25: Voksende halvmåne (Waxing Crescent)
-        - 0.25-0.375: Første kvarter (First Quarter)
-        - 0.375-0.5: Voksende gibbous (Waxing Gibbous)
-        - 0.5-0.625: Fuldmåne (Full Moon)
-        - 0.625-0.75: Aftagende gibbous (Waning Gibbous)
-        - 0.75-0.875: Sidste kvarter (Last Quarter)
-        - 0.875-1.0: Aftagende halvmåne (Waning Crescent)
+        Månecyklusen er opdelt i 8 faser:
+        - 0.0-0.125: Nymåne
+        - 0.125-0.25: Voksende halvmåne
+        - 0.25-0.375: Første kvarter
+        - 0.375-0.5: Voksende gibbous
+        - 0.5-0.625: Fuldmåne
+        - 0.625-0.75: Aftagende gibbous
+        - 0.75-0.875: Sidste kvarter
+        - 0.875-1.0: Aftagende halvmåne
         
         Args:
-            phase_value (float): Phase value from API (0-1)
+            phase_value (float): Faseværdi fra API (0-1)
         
         Returns:
-            str: Human-readable phase name in Danish
+            str: Menneskelæsbar fasenavn på dansk
         """
         if phase_value < 0.125:
             return "Nymåne"
@@ -216,19 +216,19 @@ class MoonEngine:
     @staticmethod
     def format_moon_data(api_data: Dict[str, float]) -> Dict[str, any]:
         """
-        Transform raw API data into formatted display data.
+        Transformerer råt API-data til formateret visningsdata.
         
         Args:
-            api_data (dict): Raw data from MoonAPIClient with keys:
+            api_data (dict): Råt data fra MoonAPIClient med nøgler:
                 - 'illumination': float (0-100)
                 - 'phase': float (0-1)
         
         Returns:
-            dict: Formatted data with keys:
+            dict: Formateret data med nøgler:
                 - 'illumination': float (0-100)
-                - 'illumination_percent': str (e.g., "75%")
+                - 'illumination_percent': str (f.eks., "75%")
                 - 'phase': float (0-1)
-                - 'phase_name': str (e.g., "Fuldmåne")
+                - 'phase_name': str (f.eks., "Fuldmåne")
         """
         if not api_data:
             return {
@@ -251,15 +251,15 @@ class MoonEngine:
     @staticmethod
     def calculate_days_to_full_moon(phase_value: float) -> float:
         """
-        Calculate estimated days until next full moon.
+        Beregner estimeret dage til næste fuldmåne.
         
-        Based on synodic month of 29.53 days.
+        Baseret på synodisk måned på 29,53 dage.
         
         Args:
-            phase_value (float): Current phase value (0-1)
+            phase_value (float): Aktuel faseværdi (0-1)
         
         Returns:
-            float: Approximate days until full moon
+            float: Omtrentlige dage til fuldmåne
         """
         days_into_cycle = phase_value * MoonEngine.SYNODIC_MONTH
         days_to_full = (0.5 * MoonEngine.SYNODIC_MONTH) - days_into_cycle
@@ -272,22 +272,22 @@ class MoonEngine:
 
 class MoonVisuals:
     """
-    Moon phase visualization handler.
+    Månefasevisualiseringshandler.
     
-    Maps moon phase values (0-1) to visual representations (emojis).
-    Provides consistent visual feedback for different moon phases.
+    Mapper månefaseværdier (0-1) til visuelle repræsentationer (emoji'er).
+    Giver konsistent visuelt feedback for forskellige månefaser.
     """
     
-    # Moon phase emojis for 8 distinct phases
+    # Månefase-emoji'er for 8 adskilte faser
     MOON_EMOJIS = {
-        0: "🌑",  # Nymåne (New Moon)
-        1: "🌒",  # Voksende halvmåne (Waxing Crescent)
-        2: "🌓",  # Første kvarter (First Quarter)
-        3: "🌔",  # Voksende gibbous (Waxing Gibbous)
-        4: "🌕",  # Fuldmåne (Full Moon)
-        5: "🌖",  # Aftagende gibbous (Waning Gibbous)
-        6: "🌗",  # Sidste kvarter (Last Quarter)
-        7: "🌘",  # Aftagende halvmåne (Waning Crescent),
+        0: "🌑",  # Nymåne
+        1: "🌒",  # Voksende halvmåne
+        2: "🌓",  # Første kvarter
+        3: "🌔",  # Voksende gibbous
+        4: "🌕",  # Fuldmåne
+        5: "🌖",  # Aftagende gibbous
+        6: "🌗",  # Sidste kvarter
+        7: "🌘",  # Aftagende halvmåne,
     }
     
     PHASE_RANGES = [
@@ -304,37 +304,37 @@ class MoonVisuals:
     @staticmethod
     def get_moon_emoji(phase: float) -> str:
         """
-        Get emoji representation for a moon phase value.
+        Henter emoji-repræsentation for en månefaseværdi.
         
         Args:
-            phase (float): Phase value (0-1)
+            phase (float): Faseværdi (0-1)
         
         Returns:
-            str: Moon emoji character
+            str: Månens emoji-tegn
         """
-        # Ensure phase is in valid range
+        # Sikrer fase er i gyldigt område
         phase = phase % 1.0
         
         for min_phase, max_phase, emoji_key, _ in MoonVisuals.PHASE_RANGES:
             if min_phase <= phase < max_phase:
                 return MoonVisuals.MOON_EMOJIS[emoji_key]
         
-        # Fallback to waning crescent if outside normal ranges
+        # Fallback til aftagende halvmåne hvis uden for normale områder
         return MoonVisuals.MOON_EMOJIS[7]
     
     @staticmethod
     def get_phase_info(phase: float) -> Dict[str, any]:
         """
-        Get complete phase information including emoji and name.
+        Henter fuldstændig faseinformation inkl. emoji og navn.
         
         Args:
-            phase (float): Phase value (0-1)
+            phase (float): Faseværdi (0-1)
         
         Returns:
-            dict: Dictionary with keys:
-                - 'emoji': str (emoji character)
-                - 'name': str (phase name in Danish)
-                - 'index': int (phase index 0-7)
+            dict: Ordbog med nøgler:
+                - 'emoji': str (emoji-tegn)
+                - 'name': str (fasenavn på dansk)
+                - 'index': int (faseindeks 0-7)
         """
         phase = phase % 1.0
         
@@ -346,7 +346,7 @@ class MoonVisuals:
                     "index": emoji_key
                 }
         
-        # Fallback
+        # Fallback-værdi
         return {
             "emoji": MoonVisuals.MOON_EMOJIS[7],
             "name": "Aftagende halvmåne",
@@ -356,17 +356,17 @@ class MoonVisuals:
     @staticmethod
     def get_large_moon_display(phase: float, size: int = 3) -> str:
         """
-        Get enlarged moon emoji for prominent display.
+        Henter forstørret månens emoji til prominent visning.
         
-        Repeats emoji character to make it visually larger.
+        Gentager emoji-tegnet for at gøre det visuelt større.
         
         Args:
-            phase (float): Phase value (0-1)
-            size (int): Number of times to repeat emoji (1-5)
+            phase (float): Faseværdi (0-1)
+            size (int): Antal gange emoji gentages (1-5)
         
         Returns:
-            str: Enlarged moon emoji display
+            str: Forstørret månens emoji-visning
         """
         emoji = MoonVisuals.get_moon_emoji(phase)
-        size = max(1, min(5, size))  # Clamp size between 1-5
+        size = max(1, min(5, size))  # Begrænser størrelse mellem 1-5
         return emoji * size

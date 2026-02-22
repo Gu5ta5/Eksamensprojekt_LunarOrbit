@@ -1,13 +1,13 @@
 """
-LunarOrbit - Interactive Moon Phase Visualization
+LunarOrbit - Interaktiv Månefase Visualisering
 
-A professional educational tool for visualizing and exploring moon phases.
-Uses Open Meteo API for real astronomical data and CustomTkinter for modern UI.
+Et professionelt uddannelsesværktøj til at visualisere og udforske månefaser.
+Bruger Open Meteo API for astronomiske data og CustomTkinter for moderne brugergrænseflade.
 
-Architecture:
-- main.py: UI Controller (this file) - handles all GUI logic
-- moon_api.py: API Client - communicates with Open Meteo and calculates moon data
-- boilerplate.py: Utilities - helper functions, constants, moon engine, and visuals
+Arkitektur:
+- main.py: UI-controller (denne fil) - håndterer al GUI-logik
+- moon_api.py: API-klient - kommunikerer med Open Meteo og beregner månefasedata
+- boilerplate.py: Hjælpeprogrammer - hjælpefunktioner, konstanter, månemotor og visuals
 """
 
 import customtkinter as ctk
@@ -17,44 +17,44 @@ from boilerplate import DateUtils, MoonEngine, MoonVisuals
 
 class LunarOrbitApp(ctk.CTk):
     """
-    Main application window for LunarOrbit.
+    Hovedapplikationsvindue for LunarOrbit.
     
-    Responsible only for UI rendering and event handling.
-    All business logic is delegated to specialized modules.
+    Ansvarlig kun for UI-rendering og eventbehandling.
+    Al forretningslogik delegeres til specialiserede moduler.
     """
     
     def __init__(self):
-        """Initialize the application window and components."""
+        """Initialiserer applikationsvinduet og komponenter."""
         super().__init__()
         
-        # Initialize business logic modules
+        # Initialiserer forretningslogikmoduler
         self.api_client = MoonAPIClient()
         self.moon_engine = MoonEngine()
         self.moon_visuals = MoonVisuals()
         self.date_utils = DateUtils()
         
-        # Configuration
+        # Konfiguration
         self.title("LunarOrbit - Interaktiv Månefase")
         self.geometry("900x700")
         ctk.set_appearance_mode("dark")
         
-        # Current selected date (starts with today)
+        # Aktuelt valgt dato (starter med i dag)
         self.current_date = self.date_utils.get_current_date()
         self.moon_data = None
         self.weather_data = None
         
-        # Setup UI
+        # Opsætter UI
         self._setup_ui()
         
-        # Start clock update loop
+        # Starter ur-opdateringsløkke
         self._update_clock()
         
-        # Fetch initial moon data
+        # Henter initiale månefasedata
         self._fetch_and_display_moon()
     
     def _setup_ui(self):
-        """Set up all UI components."""
-        # Clock widget - top right corner
+        """Opsætter alle UI-komponenter."""
+        # Ur-widget - øverst til højre
         self.clock_label = ctk.CTkLabel(
             self,
             text="",
@@ -153,21 +153,21 @@ class LunarOrbitApp(ctk.CTk):
     
     def _update_clock(self):
         """
-        Update the clock widget every second.
+        Opdaterer ur-widget hvert sekund.
         
-        Uses self.after() to avoid blocking the UI event loop.
+        Bruger self.after() for at undgå at blokere UI-eventloopet.
         """
         current_time = self.date_utils.get_current_time()
         self.clock_label.configure(text=current_time)
         
-        # Schedule next update in 1000ms
+        # Planlægger næste opdatering om 1000ms
         self.after(1000, self._update_clock)
     
     def _fetch_and_display_moon(self):
         """
-        Fetch moon data for current date and update display.
+        Henter månefasedata for aktuel dato og opdaterer displayet.
         
-        Orchestrates the API calls and data transformation.
+        Orkestrerer API-kald og datatransformation.
         """
         self.status_label.configure(
             text="Henter data...",
@@ -175,11 +175,11 @@ class LunarOrbitApp(ctk.CTk):
         )
         self.update()
         
-        # Get complete data (moon + optional weather)
+        # Henter komplet data (måne + valgfrit vejr)
         complete_data = self.api_client.fetch_complete_data(self.current_date)
         
         if complete_data.get("moon"):
-            # Transform moon data using engine
+            # Transformerer månefasedata ved hjælp af motor
             self.moon_data = self.moon_engine.format_moon_data(complete_data["moon"])
             self.weather_data = complete_data.get("weather")
             self._display_moon_data()
@@ -195,41 +195,41 @@ class LunarOrbitApp(ctk.CTk):
             self._display_error()
     
     def _display_moon_data(self):
-        """Display the moon data and optional weather in the UI."""
+        """Viser månefasedata og eventuelt vejrinformation i UI'en."""
         if not self.moon_data:
             return
         
-        # Get phase value for emoji
+        # Henter faseværdi for emoji
         phase_value = self.moon_data.get("phase", 0)
         
-        # Display moon emoji (large and clear)
+        # Viser månens emoji (stor og klar)
         emoji = self.moon_visuals.get_large_moon_display(phase_value, size=1)
         self.moon_display.configure(text=emoji)
         
-        # Update phase label
+        # Opdaterer faseetiket
         phase_name = self.moon_data.get("phase_name", "Ukendt")
         self.phase_label.configure(
             text=f"Fase: {phase_name}"
         )
         
-        # Update illumination label with bold number
+        # Opdaterer belysningsetiket med fed tal
         illumination_percent = self.moon_data.get("illumination_percent", "0%")
         self.illumination_label.configure(
             text=f"Belysning: {illumination_percent}"
         )
         
-        # Calculate and display days to full moon (whole number only)
+        # Beregner og viser dage til fuldmåne (hele tal kun)
         days_to_full = int(round(self.moon_engine.calculate_days_to_full_moon(phase_value)))
         self.days_to_full_label.configure(
             text=f"Dage til fuldmåne: {days_to_full}"
         )
         
-        # Update date label
+        # Opdaterer datoetiket
         self.date_label.configure(
             text=f"Dato: {self.current_date}"
         )
         
-        # Update weather labels if available
+        # Opdaterer vejretiketterne hvis tilgængelig
         if self.weather_data:
             temp_max = self.weather_data.get("temperature_max", "-")
             temp_min = self.weather_data.get("temperature_min", "-")
@@ -252,14 +252,14 @@ class LunarOrbitApp(ctk.CTk):
             self.cloud_label.configure(text="Skydække: (ikke tilgængeligt)")
     
     def _display_error(self):
-        """Display error state in UI."""
+        """Viser fejltilstand i UI'en."""
         self.phase_label.configure(text="Fase: Fejl ved hentning")
         self.illumination_label.configure(text="Belysning: -")
         self.moon_display.configure(text="❌")
 
 
 if __name__ == "__main__":
-    """Run the application."""
+    """Kører applikationen."""
     app = LunarOrbitApp()
     app.mainloop()
 

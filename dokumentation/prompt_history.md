@@ -520,3 +520,34 @@ Hvis emojierne virker forkerte, kan det vï¿½re:
 **Status:** ? Fuldfï¿½rt - App kï¿½rer uden fejl
 
 ---
+
+## Log Entry #21
+**User Prompt:**
+> "ok hver docstring i dette projekt skal være på dansk, og derefter lav en README.md fil der beskriver alle requirements for at kører applikationen på en extern komputer og giver en kort forklaring af applicationen"
+
+**AI Implementation Strategy:**
+- Oprettede komprehensiv README.md på dansk med:
+  1. Projektbeskrivelse og funktionalitet
+  2. Teknologi stack detaljer
+  3. Trin-for-trin installationsinstruktioner for Windows, macOS, Linux
+  4. Kørselsinstruktioner
+  5. Projektfilstruktur og beskrivelser
+  6. Konfigurationsmulighedier
+  7. Arkitektur og designprincipper
+  8. Astronomiske algoritmer forklaring
+  9. Månefasefase-tabel
+  10. Fejlfinding guide
+  11. API-licensering
+  12. Mulige forbedringer
+
+- Oprettede requirements.txt med:
+  - customtkinter==1.6.2
+  - requests==2.32.5
+
+**Filer Oprettet:**
+- README.md: 298 linjer dansk dokumentation
+- requirements.txt: Afhængighedsspecifikation
+
+**Status:** ? Fuldført - Komprehensiv dokumentation og requirements
+
+---

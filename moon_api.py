@@ -1,10 +1,10 @@
 """
-Moon API Client Module for LunarOrbit
+Måne-API-klientmodul for LunarOrbit
 
-Handles moon phase calculations based on astronomical algorithms.
-Also fetches supplementary weather/observation data from Open Meteo API.
+Håndterer månefaseberegninger baseret på astronomiske algoritmer.
+Henter også supplerende vejr/observationsdata fra Open Meteo API.
 
-This module encapsulates the API logic following the Single Responsibility Principle.
+Dette modul indkapsler API-logikken efter Single Responsibility-princippet.
 """
 
 import requests
@@ -14,33 +14,33 @@ from typing import Dict, Optional
 
 class MoonAPIClient:
     """
-    Moon phase calculator using astronomical algorithms.
+    Månefaseberegner ved hjælp af astronomiske algoritmer.
     
-    Calculates moon phase and illumination based on the date.
-    Uses well-established algorithms for accuracy without external API dependency.
+    Beregner månefase og belysning baseret på datoen.
+    Bruger veletablerede algoritmer for nøjagtighed uden ekstern API-afhængighed.
     
-    Also integrates with Open Meteo API to fetch weather data and other
-    supplementary information for a complete astronomical picture.
+    Integrerer også med Open Meteo API for at hente vejrdata og anden
+    supplerende information for et komplet astronomisk billede.
     
-    This approach is reliable both offline (moon calculations) and online (API data).
+    Denne tilgang er pålidelig både offline (månefaseberegninger) og online (API-data).
     """
     
-    # Reference date: January 6, 2000 was a New Moon (phase = 0)
+    # Referencedato: 6. januar 2000 var nymåne (fase = 0)
     KNOWN_NEW_MOON = datetime(2000, 1, 6)
-    SYNODIC_MONTH = 29.530588  # Days in a lunar cycle (precise value)
+    SYNODIC_MONTH = 29.530588  # Dage i en månecyklus (præcis værdi)
     
-    # Open Meteo API endpoints
+    # Open Meteo API-endepunkter
     WEATHER_API_URL = "https://api.open-meteo.com/v1/forecast"
     GEOCODING_API_URL = "https://geocoding-api.open-meteo.com/v1/search"
     
     def __init__(self, latitude: float = 55.6761, longitude: float = 12.5683, location_name: str = "København"):
         """
-        Initialize the Moon Calculator and API Client.
+        Initialiserer Måneberegneren og API-klienten.
         
         Args:
-            latitude (float): Observation latitude. Defaults to Copenhagen (55.6761)
-            longitude (float): Observation longitude. Defaults to Copenhagen (12.5683)
-            location_name (str): Location name for display. Defaults to "København"
+            latitude (float): Observationsbreddegrad. Standard til København (55.6761)
+            longitude (float): Observationslængdegrad. Standard til København (12.5683)
+            location_name (str): Stednavnet til visning. Standard "København"
         """
         self.latitude = latitude
         self.longitude = longitude
@@ -48,30 +48,30 @@ class MoonAPIClient:
     
     def fetch_moon_data(self, date_string: str) -> Optional[Dict[str, any]]:
         """
-        Calculate moon phase and illumination for a specific date.
+        Beregner månefase og belysning for en bestemt dato.
         
         Args:
-            date_string (str): Date in format YYYY-MM-DD
+            date_string (str): Dato i format YYYY-MM-DD
         
         Returns:
-            dict: Dictionary with keys:
-                - 'illumination' (float): Moon illumination 0-100%
-                - 'phase' (float): Moon phase value 0-1
-            None: If date parsing fails
+            dict: Ordbog med nøgler:
+                - 'illumination' (float): Månens belysning 0-100%
+                - 'phase' (float): Månefaseværdi 0-1
+            None: Hvis datoparsing mislykkes
         """
         try:
-            # Parse the date string
+            # Parser datostrengen
             date_obj = datetime.strptime(date_string, "%Y-%m-%d")
             
-            # Calculate days since known new moon
+            # Beregner dage siden kendt nymåne
             days_since_new_moon = (date_obj - self.KNOWN_NEW_MOON).days
             
-            # Calculate position in current lunar cycle (0-1)
+            # Beregner position i nuværende månecyklus (0-1)
             days_in_cycle = days_since_new_moon % self.SYNODIC_MONTH
             phase = days_in_cycle / self.SYNODIC_MONTH
             
-            # Calculate illumination (0-100%)
-            # Full illumination at phase 0.5, minimum at 0 and 1
+            # Beregner belysning (0-100%)
+            # Fuld belysning ved fase 0,5, minimum ved 0 og 1
             if phase < 0.5:
                 illumination = 100 * (2 * phase)
             else:
@@ -92,16 +92,16 @@ class MoonAPIClient:
     
     def fetch_weather_data(self, date_string: str) -> Optional[Dict[str, any]]:
         """
-        Fetch weather data for a specific date from Open Meteo API.
+        Henter vejrdata for en bestemt dato fra Open Meteo API.
         
-        Supplements moon data with real weather observations.
+        Supplerer månefasedata med reelle vejrobservationer.
         
         Args:
-            date_string (str): Date in format YYYY-MM-DD
+            date_string (str): Dato i format YYYY-MM-DD
         
         Returns:
-            dict: Dictionary with weather information
-            None: If API call fails
+            dict: Ordbog med vejrinformation
+            None: Hvis API-kald mislykkes
         """
         try:
             params = {
@@ -142,20 +142,20 @@ class MoonAPIClient:
     
     def fetch_complete_data(self, date_string: str) -> Dict[str, any]:
         """
-        Fetch complete moon and weather data for a date.
+        Henter komplet måne- og vejrdata for en dato.
         
-        Combines moon calculations with optional weather API data.
+        Kombinerer månefaseberegninger med eventuel vejr-API-data.
         
         Args:
-            date_string (str): Date in format YYYY-MM-DD
+            date_string (str): Dato i format YYYY-MM-DD
         
         Returns:
-            dict: Complete data dictionary with moon and optional weather info
+            dict: Komplet databordbog med måne- og eventuel vejrinfo
         """
-        # Get moon data (always works - local calculation)
+        # Henter månefasedata (virker altid - lokal beregning)
         moon_data = self.fetch_moon_data(date_string)
         
-        # Get weather data (optional - requires API connection)
+        # Henter vejrdata (valgfrit - kræver API-forbindelse)
         weather_data = self.fetch_weather_data(date_string)
         
         result = {

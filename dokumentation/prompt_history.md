@@ -523,19 +523,19 @@ Hvis emojierne virker forkerte, kan det vï¿½re:
 
 ## Log Entry #21
 **User Prompt:**
-> "ok hver docstring i dette projekt skal være på dansk, og derefter lav en README.md fil der beskriver alle requirements for at kører applikationen på en extern komputer og giver en kort forklaring af applicationen"
+> "ok hver docstring i dette projekt skal vï¿½re pï¿½ dansk, og derefter lav en README.md fil der beskriver alle requirements for at kï¿½rer applikationen pï¿½ en extern komputer og giver en kort forklaring af applicationen"
 
 **AI Implementation Strategy:**
-- Oprettede komprehensiv README.md på dansk med:
+- Oprettede komprehensiv README.md pï¿½ dansk med:
   1. Projektbeskrivelse og funktionalitet
   2. Teknologi stack detaljer
   3. Trin-for-trin installationsinstruktioner for Windows, macOS, Linux
-  4. Kørselsinstruktioner
+  4. Kï¿½rselsinstruktioner
   5. Projektfilstruktur og beskrivelser
   6. Konfigurationsmulighedier
   7. Arkitektur og designprincipper
   8. Astronomiske algoritmer forklaring
-  9. Månefasefase-tabel
+  9. Mï¿½nefasefase-tabel
   10. Fejlfinding guide
   11. API-licensering
   12. Mulige forbedringer
@@ -546,8 +546,7 @@ Hvis emojierne virker forkerte, kan det vï¿½re:
 
 **Filer Oprettet:**
 - README.md: 298 linjer dansk dokumentation
-- requirements.txt: Afhængighedsspecifikation
 
-**Status:** ? Fuldført - Komprehensiv dokumentation og requirements
+**Status:** ? Fuldfï¿½rt - Komprehensiv dokumentation
 
 ---

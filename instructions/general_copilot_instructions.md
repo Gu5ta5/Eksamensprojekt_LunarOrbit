@@ -18,3 +18,10 @@ LunarOrbit is an interactive moon phase visualization tool.
 ## Constraints
 - Use the computer's system time for the clock widget.
 - Ensure the interactive slider accurately updates the visual state of the moon.
+
+## Dokumentation
+- Dokument every prompt in prompt_history.md automatically.
+- Use prompt_history_instructions.md for the layout of every prompt.
+
+# Instructions for handling prompts
+- Use the relevant instructions from the instructions folder for each prompt.

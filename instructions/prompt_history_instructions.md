@@ -1,3 +1,6 @@
+# This file contains instructions for handling prompts.
+# Ensure to refer to the relevant instructions for each prompt.
+
 # AI Prompt & Implementation Log
 
 ## Purpose
@@ -21,3 +24,4 @@ def fetch_moon_data(api_key, date):
         pass
     except Exception as e:
         print(f"Error: {e}")
+```

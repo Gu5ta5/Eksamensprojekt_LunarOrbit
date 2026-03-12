@@ -62,6 +62,103 @@ class DateUtils:
             date = start_date + timedelta(days=i)
             date_list.append(date.strftime("%Y-%m-%d"))
         return date_list
+    
+    @staticmethod
+    def create_slider_date_range(center_date: str, range_days: int = 60) -> Tuple[str, str]:
+        """
+        Genererer start- og slut-dato omkring en centerdate for slider-kontrol.
+        
+        Bruges til at etablere datointervallet for en interaktiv datoskyder.
+        
+        Args:
+            center_date (str): Centerdate i YYYY-MM-DD-format
+            range_days (int): Antal dage på hver side af centerdate (default 60)
+        
+        Returns:
+            tuple: (start_date, end_date) begge i YYYY-MM-DD-format
+        """
+        center = datetime.strptime(center_date, "%Y-%m-%d")
+        start = center - timedelta(days=range_days)
+        end = center + timedelta(days=range_days)
+        
+        return (start.strftime("%Y-%m-%d"), end.strftime("%Y-%m-%d"))
+    
+    @staticmethod
+    def date_string_to_date_obj(date_string: str) -> datetime:
+        """
+        Konverterer datostreng til datetime-objekt.
+        
+        Args:
+            date_string (str): Dato i YYYY-MM-DD-format
+        
+        Returns:
+            datetime: Konverteret datetime-objekt
+        """
+        return datetime.strptime(date_string, "%Y-%m-%d")
+    
+    @staticmethod
+    def slider_value_to_date(slider_value: float, start_date: str, end_date: str) -> str:
+        """
+        Konverterer slider-værdi (0-100) til en dato indenfor datointervallet.
+        
+        Bruges af datoskyder til at muliggøre datovælgelse.
+        
+        Args:
+            slider_value (float): Slider position (0-100, hvor 0 = start_date, 100 = end_date)
+            start_date (str): Startdato i YYYY-MM-DD-format
+            end_date (str): Slutdato i YYYY-MM-DD-format
+        
+        Returns:
+            str: Beregnet dato i YYYY-MM-DD-format
+        """
+        start = datetime.strptime(start_date, "%Y-%m-%d")
+        end = datetime.strptime(end_date, "%Y-%m-%d")
+        
+        # Beregner hvor lang datointervallet er
+        total_days = (end - start).days
+        
+        # Beregner hvilket dag baseret på slider-værdi (procentdel)
+        days_offset = int((slider_value / 100.0) * total_days)
+        
+        # Genererer ny dato
+        selected_date = start + timedelta(days=days_offset)
+        
+        return selected_date.strftime("%Y-%m-%d")
+    
+    @staticmethod
+    def date_to_slider_value(date_string: str, start_date: str, end_date: str) -> float:
+        """
+        Konverterer en dato til slider-værdi (0-100) indenfor datointervallet.
+        
+        Omvendt af slider_value_to_date() - bruges ved initialisering af slider.
+        
+        Args:
+            date_string (str): Dato i YYYY-MM-DD-format
+            start_date (str): Startdato i YYYY-MM-DD-format
+            end_date (str): Slutdato i YYYY-MM-DD-format
+        
+        Returns:
+            float: Slider-værdi (0-100)
+        """
+        current = datetime.strptime(date_string, "%Y-%m-%d")
+        start = datetime.strptime(start_date, "%Y-%m-%d")
+        end = datetime.strptime(end_date, "%Y-%m-%d")
+        
+        # Beregner dage siden start
+        days_since_start = (current - start).days
+        
+        # Beregner total dage i interval
+        total_days = (end - start).days
+        
+        # Undgår division med nul
+        if total_days == 0:
+            return 50.0
+        
+        # Konverterer til slider-værdi (0-100)
+        slider_value = (days_since_start / total_days) * 100.0
+        
+        # Sikrer værdi er indenfor 0-100
+        return max(0.0, min(100.0, slider_value))
 
 
 class MoonConstants:

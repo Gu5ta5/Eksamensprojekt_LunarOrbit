@@ -71,11 +71,11 @@ class MoonAPIClient:
             phase = days_in_cycle / self.SYNODIC_MONTH
             
             # Beregner belysning (0-100%)
-            # Fuld belysning ved fase 0,5, minimum ved 0 og 1
-            if phase < 0.5:
-                illumination = 100 * (2 * phase)
-            else:
-                illumination = 100 * (2 * (1 - phase))
+            # Bruger kosinus-formel for korrekt månebelysning
+            # illumination = 50 * (1 - cos(2π * phase))
+            # Dette giver 0% ved nymåne, 100% ved fuldmåne
+            import math
+            illumination = 50 * (1 - math.cos(2 * math.pi * phase))
             
             return {
                 "illumination": float(illumination),

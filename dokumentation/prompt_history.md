@@ -1127,3 +1127,37 @@ if cloud_cover != "-":
 **Status:** ✅ Fuldført - Dynamic cloud-baggrund implementeret
 
 ---
+
+## Log Entry #29
+**User Prompt:**
+> "'instructions/' (see below for folder content) use these instructions for everything i tell you, remember to dokument everything you do in prompt_history.md everytime we make a change"
+>
+> "Vores næste mål er at rykke alt vores UI kode over til en ny fil vi kalder UI.py, efter alt rykningen burde main.py meget gerne være så tom som muligt, men stadig være den fil vi kører vores applikation fra"
+
+**AI Implementation Strategy:**
+- Læste og anvendte projektinstruktionerne i `instructions/` som styrende regler for arbejdet.
+- Refaktorerede hele UI-laget ud af `main.py` og ind i den nye fil `UI.py`.
+- Bevarede `main.py` som et minimalt entry point, så applikationen stadig startes derfra.
+- Sikrede at UI-logikken fortsat bruger eksisterende logikmoduler fra `logik/`.
+- Forberedte dokumentation af ændringen i `prompt_history.md` i overensstemmelse med projektkravet.
+
+**Code Snippet / Implementation Result:**
+```python
+# main.py
+from UI import LunarOrbitApp
+
+if __name__ == "__main__":
+    app = LunarOrbitApp()
+    app.mainloop()
+```
+
+```python
+# UI.py
+class LunarOrbitApp(ctk.CTk):
+    """Hovedapplikationsvindue for LunarOrbit."""
+    ...
+```
+
+**Status:** ✅ Fuldført - UI flyttet til `UI.py`, og `main.py` er nu et minimalt startpunkt
+
+---

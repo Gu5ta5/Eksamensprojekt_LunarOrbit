@@ -120,6 +120,33 @@ Alle fremtidigt prompts vil blive gemt i prompt_history.md
 
 ## Log Entry #7
 **User Prompt:**
+> "vi skal have fixet UI'en, drop det der med farver i baggrunden, vi vælger kun at gå videre med selve de små skyer der bliver tegnet til at vise skydække procenten, kan du gøre dette i UI.py filen?"
+
+**AI Implementation Strategy:**
+- Fjernede gradient-baggrund logik fra `generate_cloud_background()`
+- Skiftede fra RGB til RGBA med transparent baggrund
+- Entydelt canvas-baggrund fra `#0a1f3f` til `transparent`
+- Beholdt sky-tegning baseret på cloud_cover procent
+
+**Code Snippet / Implementation Result:**
+```python
+# Før: Image.new("RGB", (width, height)) med gradient + farver
+# Efter: Image.new("RGBA", (width, height), color=(0, 0, 0, 0))
+
+# Fjerna gradient-tegning loop'en, beholdent kun sky-tegningen med ellipser
+img = Image.new("RGBA", (width, height), color=(0, 0, 0, 0))
+draw = ImageDraw.Draw(img, "RGBA")
+
+num_clouds = int(cloud_cover / 10)
+# ... sky tegning med ellipser
+```
+
+**Status:** ✅ Fuldført
+
+---
+
+## Log Entry #7
+**User Prompt:**
 > "this is a test prompt, is it getting dokumentet?"
 
 **AI Implementation Strategy:**
